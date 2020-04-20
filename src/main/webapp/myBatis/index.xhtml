@@ -40,7 +40,7 @@
             <td>#{part.id}</td>
             <td>#{part.name}</td>
             <td>#{part.type}</td>
-            <td>#{suppliersMyBatis.loadSupplierOne(part.supplierId)}</td>
+            <td>#{part.supplier.name}</td>
         </tr>
     </ui:repeat>
 </table>

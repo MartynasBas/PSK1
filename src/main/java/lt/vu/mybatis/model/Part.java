@@ -1,5 +1,8 @@
 package lt.vu.mybatis.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class Part {
     /**
      *
@@ -132,4 +135,7 @@ public class Part {
     public void setSupplierId(Integer supplierId) {
         this.supplierId = supplierId;
     }
+
+    @Getter @Setter
+    private Supplier supplier;
 }
