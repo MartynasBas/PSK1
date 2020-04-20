@@ -15,12 +15,14 @@
             <h2>Parts:</h2>
             <table>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Type</th>
                     <th>Supplier</th>
                 </tr>
                 <ui:repeat value="#{parts.allParts}" var="part">
                     <tr>
+                        <td>#{part.id}</td>
                         <td>#{part.name}</td>
                         <td>#{part.type}</td>
                         <td>#{part.supplier.name}</td>
@@ -37,9 +39,10 @@
             </h:form>
             <br/>
             <h2>Clients:</h2>
-            <ol>
+
                 <table>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                         <th>Surname</th>
                         <th>Email</th>
@@ -47,6 +50,7 @@
                     </tr>
                     <ui:repeat value="#{clients.allClients}" var="client">
                         <tr>
+                            <td>#{client.id}</td>
                             <td>#{client.name}</td>
                             <td>#{client.surname}</td>
                             <td>#{client.email}</td>
@@ -54,7 +58,7 @@
                         </tr>
                     </ui:repeat>
                 </table>
-            </ol>
+
             <br/>
             <h:form>
                 <label>Name: <h:inputText value="#{clients.newClient.name}" required="true" /></label><br/>
@@ -67,11 +71,18 @@
         </div>
         <div class="column">
             <h2>Suppliers:</h2>
-            <ol>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
                 <ui:repeat value="#{suppliers.allSuppliers}" var="supplier">
-                    <li>#{supplier.name}</li>
+                    <tr>
+                        <td>#{supplier.id}</td>
+                        <td>#{supplier.name}</td>
+                    </tr>
                 </ui:repeat>
-            </ol>
+            </table>
             <br/>
             <h:form>
                 <h:inputText value="#{suppliers.newSupplier.name}" required="true"/>
@@ -79,27 +90,24 @@
             </h:form>
             <br/>
             <h2>Orders:</h2>
-            <ol>
-
-                <table>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Client name</th>
+                    <th>Client surname</th>
+                    <th>Part name</th>
+                    <th>Order date</th>
+                </tr>
+                <ui:repeat value="#{orders.allOrders}" var="order">
                     <tr>
-                        <th>Client name</th>
-                        <th>Client surname</th>
-                        <th>Part</th>
-                        <th>Order date</th>
+                        <td><h:link value="#{order.id}" outcome="orders?orderId=#{order.id}"/></td>
+                        <td>#{order.client.name}</td>
+                        <td>#{order.client.surname}</td>
+                        <td>#{order.part.name}</td>
+                        <td>#{order.orderPlaced}</td>
                     </tr>
-                    <ui:repeat value="#{orders.allOrders}" var="order">
-                        <tr>
-                            <td>#{order.client.name}</td>
-                            <td>#{order.client.surname}</td>
-                            <td>#{order.part.name}</td>
-                            <td>#{order.orderPlaced}</td>
-                        </tr>
-                        <li><h:link value="#{order.client.name} #{order.client.surname} #{order.part.name} #{order.orderPlaced}" outcome="order?orderId=#{order.id}"/></li>
-
-                    </ui:repeat>
-                </table>
-            </ol>
+                </ui:repeat>
+            </table>
             <br/>
             <h:form>
                 <label>Client: <h:inputText value="#{orders.clientid}" required="true"/></label><br/>
@@ -109,8 +117,31 @@
             </h:form>
             <br/>
         </div>
-        <div class="column"></div>
-    </div>
+        <div class="column">
+            <h2>Part Recommendations:</h2>
+            <table>
+                <tr>
+                    <th>Part</th>
+                    <th>Client</th>
+                </tr>
+                <ui:repeat value="#{parts.allParts}" var="part">
+                    <ui:repeat value="#{part.clients}" var="client">
+                        <tr>
+                            <td>#{part.name}</td>
+                            <td>#{client.name}</td>
+                        </tr>
+                    </ui:repeat>
+                </ui:repeat>
+            </table>
 
+            <br/>
+            <h:form>
+                <label>Part ID: <h:inputText value="#{createRecommendation.partid}" required="true" /></label><br/>
+                <label>Client ID: <h:inputText value="#{createRecommendation.clientid}" required="true"/></label><br/>
+                <h:commandButton value="Add new recommendation" action="#{createRecommendation.createNewRec}"/>
+            </h:form>
+        </div>
+    </div>
+    <h:link outcome="myBatis/index" value="MyBatis implementation"/>
 </h:body>
 </html>

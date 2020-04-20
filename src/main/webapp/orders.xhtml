@@ -10,7 +10,7 @@
     <title>Title</title>
 </head>
 <body>
-<h2>#{updateOrders.order.id}</h2>
+<h2>ID #{updateOrders.order.id}</h2>
     <h:form>
         <h:outputText value="Client id: "/>
         <h:inputText a:placeholder="enter the value" value="#{updateOrders.clientid}" required="true" />
@@ -19,6 +19,7 @@
         <h:outputText value="Date ordered: "/>
         <h:inputText a:placeholder="enter the value" value="#{updateOrders.newOrder.orderPlaced}" required="true" />
         <h:commandButton value="update" action="#{updateOrders.updateOrder}">
+            <f:param name="orderId" value="#{updateOrders.order.id}"/>
         </h:commandButton>
         <h:outputText value="value was already modified by other user" rendered="#{param['error'] == 'optimistic-lock-exception'}" />
     </h:form>

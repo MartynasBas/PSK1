@@ -44,7 +44,7 @@ public class Client implements Serializable {
     public List<Part> parts;
 
     @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
 
     @Version
     @Column(name = "optimistic_lock_ver")

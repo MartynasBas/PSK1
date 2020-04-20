@@ -6,47 +6,41 @@ import lt.vu.entities.Client;
 import lt.vu.entities.Part;
 import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.ClientDAO;
-import lt.vu.persistence.OrderDAO;
 import lt.vu.persistence.PartDAO;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Map;
 
 @Model
-public class Orders {
-    @Inject
-    private OrderDAO orderDAO;
+public class CreateRecommendation {
     @Inject
     private PartDAO partDAO;
     @Inject
     private ClientDAO clientDAO;
-
     @Getter
     @Setter
-    private lt.vu.entities.Orders newOrder = new lt.vu.entities.Orders();
-    @Getter @Setter
     private Integer partid;
     @Getter @Setter
     private Integer clientid;
 
-    @Getter
-    private List<lt.vu.entities.Orders> allOrders;
+    @Getter @Setter
+    private Part part;
 
     @PostConstruct
-    public void init() {
-        this.allOrders = orderDAO.loadAll();
+    private void init() {
     }
+
     @Transactional
     @LoggedInvocation
-    public String createNewOrder() {
-        Client client = clientDAO.findOne(clientid);
-        newOrder.setClient(client);
-        Part part = partDAO.findOne(partid);
-        newOrder.setPart(part);
-        orderDAO.persist(newOrder);
-        return "index?faces-redirect=true";
+    public String createNewRec() {
+        part = partDAO.findOne(partid);
+        part.getClients().add(clientDAO.findOne(clientid));
+        return "index";
     }
+
 }

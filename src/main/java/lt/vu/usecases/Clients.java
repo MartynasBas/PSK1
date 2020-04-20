@@ -21,6 +21,14 @@ public class Clients {
     private Client newClient = new Client();
 
     @Getter
+    @Setter
+    private Integer[] recommendedPartsIds;
+
+    @Getter
+    @Setter
+    private Integer partId;
+
+    @Getter
     private List<Client> allClients;
 
     @PostConstruct
@@ -30,6 +38,9 @@ public class Clients {
     @Transactional
     public String createNewClient() {
         clientDAO.persist(newClient);
-        return "index";
+        return "index?faces-redirect=true";
     }
+
+
+
 }

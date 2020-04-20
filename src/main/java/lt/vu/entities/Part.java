@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @NamedQueries({
@@ -38,7 +37,7 @@ public class Part implements Serializable {
     private List<Client> clients;
 
     @OneToMany(mappedBy = "part")
-    private List<Order> orders = new ArrayList<>();
+    private List<Orders> orders = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")

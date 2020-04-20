@@ -16,21 +16,17 @@
         <sqlMapGenerator targetPackage="lt.vu.mybatis.xml" targetProject="MAVEN" />
         <javaClientGenerator type="XMLMAPPER" targetPackage="lt.vu.mybatis.dao" targetProject="MAVEN" />
 
-
-
         <table schema="public" tableName="client">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
-            <ignoreColumn column="opt_lock_version" />
+            <ignoreColumn column="optimistic_lock_ver" />
         </table>
         <table schema="public" tableName="part">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
-            <ignoreColumn column="opt_lock_version" />
         </table>
         <table schema="public" tableName="supplier">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
-            <ignoreColumn column="opt_lock_version" />
         </table>
-        <table schema="public" tableName="order">
+        <table schema="public" tableName="orders">
             <generatedKey column="id" identity="true" sqlStatement="JDBC" />
         </table>
     </context>

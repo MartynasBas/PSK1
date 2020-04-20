@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<h2>Suppliers:</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+    </tr>
+    <ui:repeat value="#{suppliersMyBatis.allSuppliers}" var="supplier">
+        <tr>
+            <td>#{supplier.id}</td>
+            <td>#{supplier.name}</td>
+        </tr>
+    </ui:repeat>
+</table>
+<br/>
+<h:form>
+    <h:inputText value="#{suppliersMyBatis.newSupplier.name}" required="true"/>
+    <h:commandButton value="Add new supplier" action="#{suppliersMyBatis.createNewSupplier}"/>
+</h:form>
+<h2>Parts:</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Supplier</th>
+    </tr>
+    <ui:repeat value="#{partsMyBatis.allParts}" var="part">
+        <tr>
+            <td>#{part.id}</td>
+            <td>#{part.name}</td>
+            <td>#{part.type}</td>
+            <td>#{suppliersMyBatis.loadSupplierOne(part.supplierId)}</td>
+        </tr>
+    </ui:repeat>
+</table>
+<br/>
+<h:form>
+    <label>Name: <h:inputText value="#{partsMyBatis.newPart.name}" required="true" /></label><br/>
+    <label>Type: <h:inputText value="#{partsMyBatis.newPart.type}" required="true"/></label><br/>
+    <label>Supplier: <h:inputText value="#{partsMyBatis.supplierid}" required="true"/></label><br/>
+    <h:commandButton value="Add part" action="#{partsMyBatis.createNewPart}">
+    </h:commandButton>
+</h:form>
+</body>
+</html>

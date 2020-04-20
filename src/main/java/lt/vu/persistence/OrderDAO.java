@@ -1,8 +1,6 @@
 package lt.vu.persistence;
 
-import lt.vu.entities.Client;
-import lt.vu.entities.Order;
-import lt.vu.entities.Supplier;
+import lt.vu.entities.Orders;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,18 +12,18 @@ public class OrderDAO {
     @Inject
     private EntityManager em;
 
-    public void persist(Order order){
+    public void persist(Orders order){
         this.em.persist(order);
     }
 
-    public List<Order> loadAll() {
-        return em.createNamedQuery("Order.findAll", Order.class).getResultList();
+    public List<Orders> loadAll() {
+        return em.createNamedQuery("Order.findAll", Orders.class).getResultList();
     }
-    public Order findOne(Integer id){
-        return em.find(Order.class, id);
+    public Orders findOne(Integer id){
+        return em.find(Orders.class, id);
     }
 
-    public Order update(Order order) {
+    public Orders update(Orders order) {
         return em.merge(order);
     }
 }

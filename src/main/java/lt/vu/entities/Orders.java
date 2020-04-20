@@ -7,19 +7,18 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Order.findAll", query = "select a from Order as a")
+        @NamedQuery(name = "Order.findAll", query = "select a from Orders as a")
 })
 
 @Table(name = "ORDERS")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Order implements Serializable {
+public class Orders implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +39,7 @@ public class Order implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
+        Orders order = (Orders) o;
         return Objects.equals(id, order.id) &&
                 Objects.equals(orderPlaced, order.orderPlaced);
     }

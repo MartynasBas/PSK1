@@ -3,13 +3,12 @@ package lt.vu.usecases;
 import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Client;
-import lt.vu.entities.Order;
+import lt.vu.entities.Orders;
 import lt.vu.entities.Part;
-import lt.vu.entities.Supplier;
+import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.persistence.ClientDAO;
 import lt.vu.persistence.OrderDAO;
 import lt.vu.persistence.PartDAO;
-import lt.vu.persistence.SupplierDAO;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -23,7 +22,7 @@ import java.util.Map;
 public class UpdateOrders {
     @Getter
     @Setter
-    private Order order;
+    private Orders order;
 
     @Inject
     private OrderDAO orderDAO;
@@ -34,7 +33,7 @@ public class UpdateOrders {
 
     @Getter
     @Setter
-    private Order newOrder = new Order();
+    private Orders newOrder = new Orders();
     @Getter
     @Setter
     private Integer partid;
@@ -48,16 +47,19 @@ public class UpdateOrders {
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Integer orderId = Integer.parseInt(requestParameters.get("orderId"));
         this.order = orderDAO.findOne(orderId);
+        System.out.println(orderId);
     }
 
     @Transactional
+    @LoggedInvocation
     public String updateOrder() {
         try{
             Client client = clientDAO.findOne(clientid);
             newOrder.setClient(client);
             Part part = partDAO.findOne(partid);
             newOrder.setPart(part);
-            //newOrder.setId(order.getId());
+            newOrder.setId(order.getId());
+            //System.out.println("UpdateOrder INIT CALLED");
             orderDAO.update(newOrder);
         } catch (OptimisticLockException e) {
             return "/index.xhtml";// + "&error=optimistic-lock-exception";
@@ -67,11 +69,11 @@ public class UpdateOrders {
 
 
 
-    public Order getClub() {
+    public Orders getOrder() {
         return order;
     }
 
-    public void setSupplier(Order order) {
+    public void setOrder(Orders order) {
         this.order = order;
     }
 }

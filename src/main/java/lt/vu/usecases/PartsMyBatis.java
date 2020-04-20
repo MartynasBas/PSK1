@@ -2,31 +2,29 @@ package lt.vu.usecases;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.entities.Part;
-import lt.vu.entities.Supplier;
+import lt.vu.mybatis.model.Supplier;
+import lt.vu.mybatis.model.Part;
 import lt.vu.interceptors.LoggedInvocation;
+import lt.vu.mybatis.dao.PartMapper;
+import lt.vu.mybatis.dao.SupplierMapper;
 import lt.vu.persistence.PartDAO;
 import lt.vu.persistence.SupplierDAO;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @Model
-public class Parts {
+public class PartsMyBatis {
+    @Inject
+    private PartMapper partMapper;
 
     @Inject
-    private PartDAO partDAO;
+    private SupplierMapper supplierMapper;
 
-    @Inject
-    private SupplierDAO supplierDAO;
 
-    @Getter @Setter
-    private Supplier supplier;
 
     @Getter @Setter
     private Integer supplierid;
@@ -47,19 +45,18 @@ public class Parts {
     @Transactional
     @LoggedInvocation
     public String createNewPart() {
-        Supplier temp = supplierDAO.findOne(supplierid);
-        newPart.setSupplier(temp);
-        partDAO.persist(newPart);
+        //Supplier temp = supplierMapper.selectByPrimaryKey(supplierid);
+        newPart.setSupplierId(supplierid);
+        partMapper.insert(newPart);
         return "index?faces-redirect=true";
     }
 
     private void loadParts() {
-        this.allParts = partDAO.loadAll();
+        this.allParts = partMapper.selectAll();
     }
 
     public String createNewRec() {
         //supplierDAO.persist(newSupplier);
         return "index";
     }
-
 }

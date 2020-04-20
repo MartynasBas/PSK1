@@ -2,7 +2,8 @@ package lt.vu.usecases;
 
 import lombok.Getter;
 import lombok.Setter;
-import lt.vu.entities.Supplier;
+import lt.vu.mybatis.model.Supplier;
+import lt.vu.mybatis.dao.SupplierMapper;
 import lt.vu.persistence.SupplierDAO;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +13,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Model
-public class Suppliers {
+public class SuppliersMyBatis {
     @Inject
-    private SupplierDAO supplierDAO;
+    private SupplierMapper supplierMapper;
 
     @Getter
     @Setter
@@ -30,10 +31,15 @@ public class Suppliers {
 
     @Transactional
     public String createNewSupplier() {
-        supplierDAO.persist(newSupplier);
-        return "index?faces-redirect=true";
+        supplierMapper.insert(newSupplier);
+        return "/myBatis/index?faces-redirect=true";
     }
     private void loadSupplier() {
-        this.allSuppliers = supplierDAO.loadAll();
+        this.allSuppliers = supplierMapper.selectAll();
     }
+
+    public String loadSupplierOne(Integer id) {
+        return supplierMapper.selectByPrimaryKey(id).getName();
+    }
+
 }
