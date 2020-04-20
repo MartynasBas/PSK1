@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <link href="style.css" rel="stylesheet" type="text/css"/>
+</h:head>
+<h:body>
+
+    <div class="row">
+        <div class="column">
+            <h2>Parts:</h2>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Supplier</th>
+                </tr>
+                <ui:repeat value="#{parts.allParts}" var="part">
+                    <tr>
+                        <td>#{part.name}</td>
+                        <td>#{part.type}</td>
+                        <td>#{part.supplier.name}</td>
+                    </tr>
+                </ui:repeat>
+            </table>
+            <br/>
+            <h:form>
+                <label>Name: <h:inputText value="#{parts.newPart.name}" required="true" /></label><br/>
+                <label>Type: <h:inputText value="#{parts.newPart.type}" required="true"/></label><br/>
+                <label>Supplier: <h:inputText value="#{parts.supplierid}" required="true"/></label><br/>
+                <h:commandButton value="Add part" action="#{parts.createNewPart}">
+                </h:commandButton>
+            </h:form>
+            <br/>
+            <h2>Clients:</h2>
+            <ol>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                    <ui:repeat value="#{clients.allClients}" var="client">
+                        <tr>
+                            <td>#{client.name}</td>
+                            <td>#{client.surname}</td>
+                            <td>#{client.email}</td>
+                            <td>#{client.phone}</td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </ol>
+            <br/>
+            <h:form>
+                <label>Name: <h:inputText value="#{clients.newClient.name}" required="true" /></label><br/>
+                <label>Surname: <h:inputText value="#{clients.newClient.surname}" required="true"/></label><br/>
+                <label>Email: <h:inputText value="#{clients.newClient.email}" required="true"/></label><br/>
+                <label>Phone: <h:inputText value="#{clients.newClient.phone}" required="true"/></label><br/>
+                <h:commandButton value="Add new client" action="#{clients.createNewClient}"/>
+            </h:form>
+            <br/>
+        </div>
+        <div class="column">
+            <h2>Suppliers:</h2>
+            <ol>
+                <ui:repeat value="#{suppliers.allSuppliers}" var="supplier">
+                    <li>#{supplier.name}</li>
+                </ui:repeat>
+            </ol>
+            <br/>
+            <h:form>
+                <h:inputText value="#{suppliers.newSupplier.name}" required="true"/>
+                <h:commandButton value="Add new supplier" action="#{suppliers.createNewSupplier}"/>
+            </h:form>
+            <br/>
+            <h2>Orders:</h2>
+            <ol>
+
+                <table>
+                    <tr>
+                        <th>Client name</th>
+                        <th>Client surname</th>
+                        <th>Part</th>
+                        <th>Order date</th>
+                    </tr>
+                    <ui:repeat value="#{orders.allOrders}" var="order">
+                        <tr>
+                            <td>#{order.client.name}</td>
+                            <td>#{order.client.surname}</td>
+                            <td>#{order.part.name}</td>
+                            <td>#{order.orderPlaced}</td>
+                        </tr>
+                        <li><h:link value="#{order.client.name} #{order.client.surname} #{order.part.name} #{order.orderPlaced}" outcome="order?orderId=#{order.id}"/></li>
+
+                    </ui:repeat>
+                </table>
+            </ol>
+            <br/>
+            <h:form>
+                <label>Client: <h:inputText value="#{orders.clientid}" required="true"/></label><br/>
+                <label>Part: <h:inputText value="#{orders.partid}" required="true"/></label><br/>
+                <label>Order Placed Date: <h:inputText value="#{orders.newOrder.orderPlaced}" required="true"/></label><br/>
+                <h:commandButton value="Add new order" action="#{orders.createNewOrder}"/>
+            </h:form>
+            <br/>
+        </div>
+        <div class="column"></div>
+    </div>
+
+</h:body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<h2>#{updateOrders.order.id}</h2>
+    <h:form>
+        <h:outputText value="Client id: "/>
+        <h:inputText a:placeholder="enter the value" value="#{updateOrders.clientid}" required="true" />
+        <h:outputText value="Part id: "/>
+        <h:inputText a:placeholder="enter the value" value="#{updateOrders.partid}" required="true" />
+        <h:outputText value="Date ordered: "/>
+        <h:inputText a:placeholder="enter the value" value="#{updateOrders.newOrder.orderPlaced}" required="true" />
+        <h:commandButton value="update" action="#{updateOrders.updateOrder}">
+        </h:commandButton>
+        <h:outputText value="value was already modified by other user" rendered="#{param['error'] == 'optimistic-lock-exception'}" />
+    </h:form>
+    <h:link outcome="index" value="Back to home page"/>
+</body>
+</html>
