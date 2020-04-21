@@ -66,6 +66,11 @@ public class UpdateOrders {
         }
         return "/index.xhtml";
     }
+    @Transactional
+    public String deleteOrder() {
+        orderDAO.delete(order);
+        return "/index.xhtml";
+    }
 
 
 

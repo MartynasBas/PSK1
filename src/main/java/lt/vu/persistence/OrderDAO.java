@@ -26,4 +26,8 @@ public class OrderDAO {
     public Orders update(Orders order) {
         return em.merge(order);
     }
+
+    public void delete(Orders order) {
+        em.remove(order);
+    }
 }
