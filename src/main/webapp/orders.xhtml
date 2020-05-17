@@ -5,12 +5,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <head>
     <title>Title</title>
 </head>
 <body>
 <h2>ID #{updateOrders.order.id}</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Client name</th>
+        <th>Client surname</th>
+        <th>Part name</th>
+        <th>Order date</th>
+    </tr>
+    <ui:repeat value="#{updateOrders.order.id}" var="order">
+        <tr>
+            <td>#{updateOrders.order.id}</td>
+            <td>#{updateOrders.order.client.name}</td>
+            <td>#{updateOrders.order.client.surname}</td>
+            <td>#{updateOrders.order.part.name}</td>
+            <td>#{updateOrders.order.orderPlaced}</td>
+        </tr>
+    </ui:repeat>
+</table>
+<h:form>
+    <h:commandButton value="Get how many days passed since the order" disabled="#{days.daysCalculationRunning(updateOrders.order.id)}" action="#{days.recalculateDays()}">
+        <f:param name="orderPlaced" value="#{updateOrders.order.orderPlaced}" />
+        <f:param name="orderId" value="#{updateOrders.order.id}" />
+    </h:commandButton>
+    <h:outputText value="#{days.getDaysCalculatorStatus(updateOrders.order.id)}" />
+</h:form>
+
 <h:form>
     <h:outputText value="Client id: "/>
     <h:inputText a:placeholder="enter the value" value="#{updateOrders.clientid}" required="true"/>
@@ -23,9 +50,6 @@
     </h:commandButton>
     <h:outputText value="value was already modified by other user"
                   rendered="#{param['error'] == 'optimistic-lock-exception'}"/>
-    <h:commandButton value="update" action="#{updateOrders.deleteOrder}">
-        <f:param name="orderId" value="#{updateOrders.order.id}"/>
-    </h:commandButton>
 </h:form>
 <h:form>
     <h:commandButton value="delete" action="#{updateOrders.deleteOrder}">

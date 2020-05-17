@@ -35,6 +35,10 @@ public class Orders implements Serializable {
     @Column(name = "order_placed")
     private String orderPlaced;
 
+    @Version
+    @Column(name = "optimistic_lock_ver")
+    private Integer version;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

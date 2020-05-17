@@ -10,13 +10,18 @@ import lt.vu.persistence.OrderDAO;
 import lt.vu.persistence.PartDAO;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Model
-public class Orders {
+public class Orders implements Serializable {
     @Inject
     private OrderDAO orderDAO;
     @Inject
@@ -32,12 +37,14 @@ public class Orders {
     @Getter @Setter
     private Integer clientid;
 
+
     @Getter
     private List<lt.vu.entities.Orders> allOrders;
 
     @PostConstruct
-    public void init() {
+    public void init(){
         this.allOrders = orderDAO.loadAll();
+
     }
     @Transactional
     @LoggedInvocation
@@ -49,4 +56,6 @@ public class Orders {
         orderDAO.persist(newOrder);
         return "index?faces-redirect=true";
     }
+
+
 }
