@@ -1,13 +1,14 @@
 package lt.vu.usecases;
 import lt.vu.interceptors.LoggedInvocation;
+import lt.vu.services.CalculatorService;
 import lt.vu.services.DaysCalculator;
 
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.net.CacheRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -17,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 @Named
 public class Days implements Serializable {
     @Inject
-    DaysCalculator daysCalculator;
+    CalculatorService calculateService;
 
     private CompletableFuture<Integer> daysCalculatorTask = null;
 
@@ -29,7 +30,7 @@ public class Days implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
         //daysCalculatorTask = CompletableFuture.supplyAsync(() -> daysCalculator.calculateDays(requestParameters.get("orderPlaced")));
-        daysTasks.put(requestParameters.get("orderId"), CompletableFuture.supplyAsync(() -> daysCalculator.calculateDays(requestParameters.get("orderPlaced"))));
+        daysTasks.put(requestParameters.get("orderId"), CompletableFuture.supplyAsync(() -> calculateService.method(requestParameters.get("orderPlaced"))));
         return  "orders?faces-redirect=true&orderId=" + requestParameters.get("orderId");
     }
 

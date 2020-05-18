@@ -134,13 +134,16 @@
                     </ui:repeat>
                 </ui:repeat>
             </table>
+            <label></label>
 
             <br/>
             <h:form>
                 <label>Part ID: <h:inputText value="#{createRecommendation.partid}" required="true" /></label><br/>
                 <label>Client ID: <h:inputText value="#{createRecommendation.clientid}" required="true"/></label><br/>
                 <h:commandButton value="Add new recommendation" action="#{createRecommendation.createNewRec}"/>
+
             </h:form>
+
         </div>
     </div>
     <h:link outcome="myBatis/index" value="MyBatis implementation"/>

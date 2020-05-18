@@ -12,22 +12,16 @@ import java.util.List;
 import java.util.Random;
 
 @ApplicationScoped
-public class DaysCalculator implements Serializable {
+public class DaysCalculator extends CalculatorService implements Serializable {
 
-    public Integer calculateDays(String orderDate) {
-        try {
-            Thread.sleep(3000); // Simulate intensive work
-        } catch (InterruptedException e) {
-        }
+    public Integer calculate(String orderDate) {
+
         LocalDate dateBefore = LocalDate.parse(orderDate);
-        LocalDate dateAfter = LocalDate.parse("2020-05-19");
-
-        //calculating number of days in between
+        LocalDate dateAfter = LocalDate.parse("2020-05-01");
         Integer noOfDaysBetween = (int)ChronoUnit.DAYS.between(dateBefore, dateAfter);
 
 
         return noOfDaysBetween;
-        //Integer generatedJerseyNumber = new Random().nextInt(100);
-        //return generatedJerseyNumber;
+
     }
 }

@@ -5,6 +5,7 @@ import lombok.Setter;
 import lt.vu.entities.Client;
 import lt.vu.entities.Part;
 import lt.vu.interceptors.LoggedInvocation;
+import lt.vu.interceptors.NotFoundInvocation;
 import lt.vu.persistence.ClientDAO;
 import lt.vu.persistence.PartDAO;
 
@@ -31,15 +32,20 @@ public class CreateRecommendation {
     @Getter @Setter
     private Part part;
 
+    @Getter @Setter
+    private Client client;
+
     @PostConstruct
     private void init() {
     }
 
     @Transactional
-    @LoggedInvocation
+    @NotFoundInvocation
     public String createNewRec() {
         part = partDAO.findOne(partid);
-        part.getClients().add(clientDAO.findOne(clientid));
+        client = clientDAO.findOne(clientid);
+        client.getClass();
+        part.getClients().add(client);
         return "index";
     }
 

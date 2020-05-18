@@ -4,25 +4,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.vu.entities.Client;
 import lt.vu.entities.Part;
-import lt.vu.interceptors.LoggedInvocation;
 import lt.vu.interceptors.NotFoundInvocation;
 import lt.vu.persistence.ClientDAO;
 import lt.vu.persistence.OrderDAO;
 import lt.vu.persistence.PartDAO;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Model;
+import javax.enterprise.inject.Specializes;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Model
-public class Orders implements Serializable {
+@Specializes
+public class OrdersSpecializes extends Orders implements Serializable {
     @Inject
     private OrderDAO orderDAO;
     @Inject
@@ -54,6 +51,7 @@ public class Orders implements Serializable {
         newOrder.setClient(client);
         Part part = partDAO.findOne(partid);
         newOrder.setPart(part);
+        orderDAO.persist(newOrder);
         orderDAO.persist(newOrder);
         return "index?faces-redirect=true";
     }

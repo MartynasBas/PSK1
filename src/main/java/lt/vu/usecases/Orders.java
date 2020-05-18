@@ -5,6 +5,7 @@ import lombok.Setter;
 import lt.vu.entities.Client;
 import lt.vu.entities.Part;
 import lt.vu.interceptors.LoggedInvocation;
+import lt.vu.interceptors.NotFoundInvocation;
 import lt.vu.persistence.ClientDAO;
 import lt.vu.persistence.OrderDAO;
 import lt.vu.persistence.PartDAO;
@@ -47,7 +48,7 @@ public class Orders implements Serializable {
 
     }
     @Transactional
-    @LoggedInvocation
+    @NotFoundInvocation
     public String createNewOrder() {
         Client client = clientDAO.findOne(clientid);
         newOrder.setClient(client);
@@ -56,6 +57,8 @@ public class Orders implements Serializable {
         orderDAO.persist(newOrder);
         return "index?faces-redirect=true";
     }
+
+
 
 
 }

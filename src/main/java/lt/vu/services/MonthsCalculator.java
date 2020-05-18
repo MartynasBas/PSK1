@@ -1,32 +1,30 @@
 package lt.vu.services;
 
-import lt.vu.entities.Orders;
-import lt.vu.persistence.OrderDAO;
-
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.enterprise.inject.Alternative;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Random;
 
 @ApplicationScoped
-public class DaysCalculator implements Serializable {
+@Alternative
+public class MonthsCalculator extends CalculatorService implements Serializable {
 
-    public Integer calculateDays(String orderDate) {
-        try {
-            Thread.sleep(3000); // Simulate intensive work
-        } catch (InterruptedException e) {
-        }
-        LocalDate dateBefore = LocalDate.parse(orderDate);
-        LocalDate dateAfter = LocalDate.parse("2020-05-19");
+    public Integer calculate(String orderDate) {
+//        try {
+//            Thread.sleep(3000); // Simulate intensive work
+//        } catch (InterruptedException e) {
+//        }
+//        LocalDate dateBefore = LocalDate.parse(orderDate);
+//        LocalDate dateAfter = LocalDate.parse("2020-05-19");
 
         //calculating number of days in between
-        Integer noOfDaysBetween = (int)ChronoUnit.DAYS.between(dateBefore, dateAfter);
+        LocalDate dateBefore = LocalDate.parse(orderDate);
+        LocalDate dateAfter = LocalDate.parse("2020-05-19");
+        Integer noOfMonthsBetween = (int)ChronoUnit.MONTHS.between(dateBefore, dateAfter);
 
 
-        return noOfDaysBetween;
+        return noOfMonthsBetween;
         //Integer generatedJerseyNumber = new Random().nextInt(100);
         //return generatedJerseyNumber;
     }

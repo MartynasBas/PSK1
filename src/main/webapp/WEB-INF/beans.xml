@@ -8,5 +8,13 @@
 
     <interceptors>
         <class>lt.vu.interceptors.MethodLogger</class>
+        <class>lt.vu.interceptors.NotFoundLogger</class>
     </interceptors>
+    <alternatives>
+        <!--<class>lt.vu.services.MonthsCalculator</class>-->
+    </alternatives>
+    <decorators>
+        <class>lt.vu.services.CalculatorDecorator</class>
+    </decorators>
+
 </beans>
